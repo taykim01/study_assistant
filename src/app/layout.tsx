@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./styles/globals.css";
+import "../presentation/assets/styles/Global.css";
 
 export const metadata: Metadata = {
   title: "Study Assistant",
