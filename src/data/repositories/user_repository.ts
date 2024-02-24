@@ -87,6 +87,28 @@ export default class UserRepository {
     }
   }
 
+  async deleteFromImportant(email: string, keyword: string): Promise<DataResponse> {
+    try {
+      const users: any[] = [];
+      const q = query(
+        collection(db, "users", email, "history"),
+        where("keyword", "==", keyword)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        users.unshift({
+          ...doc.data(),
+          id: doc.id,
+        });
+      });
+      const docRef = doc(db, "users", email, "history", users[0].id);
+      await updateDoc(docRef, { important: false });
+      return new DataResponse(Result.Success, "saved to important", {});
+    } catch (error) {
+      return new DataResponse(Result.Fail, "error saving to important", error);
+    }
+  }
+
   updateUser(email: string, password: string): Promise<DataResponse> {
     const response = new DataResponse(
       Result.Success,
