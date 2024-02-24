@@ -5,10 +5,12 @@ import {
   getDocs,
   doc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
-import DataResponse, { Result } from "../DataResponse";
+import DataResponse from "../DataResponse";
 import { db } from "../firebase";
 import UserModel from "@/domain/models/user_model";
+import { Result } from "@/types";
 
 export default class UserRepository {
   login(email: string, password: string): Promise<DataResponse> {
@@ -60,6 +62,28 @@ export default class UserRepository {
       return new DataResponse(Result.Success, "User successfully created", {});
     } catch (error) {
       return new DataResponse(Result.Fail, "User not created", {});
+    }
+  }
+
+  async saveToImportant(email: string, keyword: string): Promise<DataResponse> {
+    try {
+      const users: any[] = [];
+      const q = query(
+        collection(db, "users", email, "history"),
+        where("keyword", "==", keyword)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        users.unshift({
+          ...doc.data(),
+          id: doc.id,
+        });
+      });
+      const docRef = doc(db, "users", email, "history", users[0].id);
+      await updateDoc(docRef, { important: true });
+      return new DataResponse(Result.Success, "saved to important", {});
+    } catch (error) {
+      return new DataResponse(Result.Fail, "error saving to important", error);
     }
   }
 

@@ -1,5 +1,6 @@
-import DataResponse, { Result } from "@/data/DataResponse";
+import DataResponse from "@/data/DataResponse";
 import UserRepository from "@/data/repositories/user_repository";
+import { Result } from "@/types";
 
 export default class SignUpUseCase {
 
