@@ -1,12 +1,14 @@
-export default class Consultation {
+import { AIModel } from "@/types";
+
+export default class KeywordModel {
   userId: string;
   createdAt: Date;
   term: string;
   definition: string;
   example: string;
-  image_url: string;
+  // image_url: string;
   origin: string;
-  model: "OpenAI" | "Gemini";
+  model: AIModel;
 
   constructor(
     userId: string,
@@ -14,16 +16,16 @@ export default class Consultation {
     term: string,
     definition: string,
     example: string,
-    image_url: string,
+    // image_url: string,
     origin: string,
-    model: "OpenAI" | "Gemini"
+    model: AIModel
   ) {
     this.userId = userId;
     this.createdAt = createdAt;
     this.term = term;
     this.definition = definition;
     this.example = example;
-    this.image_url = image_url;
+    // this.image_url = image_url;
     this.origin = origin;
     this.model = model;
   }
@@ -35,7 +37,7 @@ export default class Consultation {
       term: this.term,
       definition: this.definition,
       example: this.example,
-      image_url: this.image_url,
+      // image_url: this.image_url,
       origin: this.origin,
       model: this.model,
     };

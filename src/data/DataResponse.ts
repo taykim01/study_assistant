@@ -1,7 +1,4 @@
-export enum Result {
-  Success = 1,
-  Fail = 2,
-}
+import { Result } from "@/types";
 
 export default class DataResponse {
   result: Result;
