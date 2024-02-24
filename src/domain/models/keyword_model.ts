@@ -1,7 +1,6 @@
 import { AIModel } from "@/types";
 
 export default class KeywordModel {
-   email: string;
   createdAt: Date;
   term: string;
   definition: string;
@@ -11,7 +10,6 @@ export default class KeywordModel {
   model: AIModel;
 
   constructor(
-     email: string,
     createdAt: Date,
     term: string,
     definition: string,
@@ -20,7 +18,6 @@ export default class KeywordModel {
     origin: string,
     model: AIModel
   ) {
-    this. email =  email;
     this.createdAt = createdAt;
     this.term = term;
     this.definition = definition;
@@ -32,7 +29,6 @@ export default class KeywordModel {
 
   toObject() {
     return {
-       email: this. email,
       createdAt: this.createdAt,
       term: this.term,
       definition: this.definition,

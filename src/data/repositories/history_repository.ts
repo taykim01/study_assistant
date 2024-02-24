@@ -5,6 +5,7 @@ import {
   getDocs,
   doc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import DataResponse from "../DataResponse";
 import { db } from "../firebase";
@@ -39,7 +40,6 @@ export default class HistoryRepository {
   ): Promise<DataResponse> {
     try {
       const newHistory = new KeywordModel(
-        email,
         new Date(),
         keyword,
         definition,
@@ -48,11 +48,22 @@ export default class HistoryRepository {
         model
       ).toObject();
 
-      const docRef = doc(collection(db, "history"));
+      const docRef = doc(collection(db, "users", email, "history"));
       await setDoc(docRef, newHistory);
       return new DataResponse(Result.Success, "history write success", {});
     } catch (error) {
       return new DataResponse(Result.Fail, "history write failed", error);
+    }
+  }
+
+  async modifyHistory(email: string, keywordID: string, modificationContent: {}): Promise<DataResponse> {
+    try {
+      const docRef = doc(db, "users", email, "history", keywordID);
+      await updateDoc(docRef, modificationContent);
+
+      return new DataResponse(Result.Success, "history modify success", {});
+    } catch (error) {
+      return new DataResponse(Result.Fail, "history modify failed", error);
     }
   }
 }
