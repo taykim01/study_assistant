@@ -1,5 +1,3 @@
-type Model = "OpenAi" | "Gemini";
-
 export default class Consultation {
   userId: string;
   createdAt: Date;
@@ -8,7 +6,7 @@ export default class Consultation {
   example: string;
   image_url: string;
   origin: string;
-  model: Model;
+  model: "OpenAI" | "Gemini";
 
   constructor(
     userId: string,
@@ -18,7 +16,7 @@ export default class Consultation {
     example: string,
     image_url: string,
     origin: string,
-    model: Model
+    model: "OpenAI" | "Gemini"
   ) {
     this.userId = userId;
     this.createdAt = createdAt;
