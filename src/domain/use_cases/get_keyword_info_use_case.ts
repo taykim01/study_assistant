@@ -1,4 +1,5 @@
 import DataResponse from "@/data/DataResponse";
+import HistoryRepository from "@/data/repositories/history_repository";
 import GeminiServices from "@/data/services/gemini_services";
 import OpenAIServices from "@/data/services/openai_services";
 import { AIModel, Result } from "@/types";
@@ -9,14 +10,26 @@ export default class GetKeywordInfoUseCase {
     // return keyword model
 
     async getKeywordInfo(keyword: string, model: AIModel): Promise<DataResponse> {
-        const openai = new OpenAIServices();
-        const gemini = new GeminiServices()
+        const open_AI_services = new OpenAIServices();
+        const gemini_services = new GeminiServices();
+        const history_repository = new HistoryRepository();
         if (model === AIModel.OpenAI) {
             // use openai service
-            return openai.generateKeywordInfo(keyword);
+            const openaiResult = await open_AI_services.generateKeywordInfo(keyword);
+            // add to db
+            if (openaiResult.result === Result.Success) {
+                const contents = openaiResult.payload;
+                const definition = contents[0];
+                const example = contents[1];
+                const origin = contents[2];
+                const writeHistoryResult = await history_repository.writeHistory("email", keyword, definition, example, origin, model);
+                return writeHistoryResult;
+            } else {
+                return new DataResponse(Result.Fail, "error generating keyword info", openaiResult.payload);
+            }
         } else {
             // use gemini service
-            return new DataResponse(Result.Success, "gemini not available yet", {} );
+            return new DataResponse(Result.Success, "gemini is not available yet", {} );
         }
     }
 }
