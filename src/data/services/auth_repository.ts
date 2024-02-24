@@ -1,7 +1,8 @@
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import DataResponse, { Result } from "../DataResponse";
+import DataResponse from "../DataResponse";
 import { db } from "../firebase";
+import { Result } from "@/types";
 
 export default class AuthRepository {
   async login(email: string, password: string): Promise<DataResponse> {

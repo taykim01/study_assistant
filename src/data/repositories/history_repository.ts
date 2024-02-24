@@ -6,6 +6,7 @@ import {
   doc,
   setDoc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import DataResponse from "../DataResponse";
 import { db } from "../firebase";
@@ -61,6 +62,15 @@ export default class HistoryRepository {
       const docRef = doc(db, "users", email, "history", keywordID);
       await updateDoc(docRef, modificationContent);
 
+      return new DataResponse(Result.Success, "history modify success", {});
+    } catch (error) {
+      return new DataResponse(Result.Fail, "history modify failed", error);
+    }
+  }
+
+  async deleteHistory(email: string, keywordID: string): Promise<DataResponse> {
+    try {
+      await deleteDoc(doc(db, "users", email, "history", keywordID));
       return new DataResponse(Result.Success, "history modify success", {});
     } catch (error) {
       return new DataResponse(Result.Fail, "history modify failed", error);
