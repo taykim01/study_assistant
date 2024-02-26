@@ -17,8 +17,7 @@ export default class HistoryRepository {
   async readHistory(email: string): Promise<DataResponse> {
     const history: {}[] = [];
     try {
-      const q = query(collection(db, "users"), where("email", "==", email));
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(collection(db, "users", email, "history"));
       querySnapshot.forEach((doc) => {
         history.push({
           ...doc.data(),

@@ -4,35 +4,22 @@ import { Result } from "@/types";
 
 export default class OpenAIServices {
   async generateKeywordInfo(keyword: string) {
-    const openai = new OpenAI();
+    const openai = new OpenAI({apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
     try {
       const completion = await openai.chat.completions.create({
         messages: [
           {
-            role: "system",
-            content:
-              "You are my learning assistant. You are here to help me learn some keywords by extracting the important information into one sentence of definition.",
-          },
-          {
             role: "assistant",
-            content: `Tell me the definition of ${keyword} in one sentence.`,
-          },
-          { role: "assistant", content: `Give me an example of ${keyword}.` },
-          {
-            role: "assistant",
-            content: `Tell me the origin or the root of the word ${keyword}.`,
+            content: `You are my learning assistant. You are here to help me learn some keywords by extracting the important information into one sentence of definition. Tell me the definition of ${keyword} in one sentence.`,
           },
         ],
         model: "gpt-4",
       });
-      const contents = [];
-      for (let i = 0; i < 3; i++) {
-        contents.push(completion.choices[i].message.content);
-      }
+      const content = completion.choices[0].message.content
       return new DataResponse(
         Result.Success,
         "keyword info generated",
-        contents
+        content
       );
     } catch (error) {
       return new DataResponse(

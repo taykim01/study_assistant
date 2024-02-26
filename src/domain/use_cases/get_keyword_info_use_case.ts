@@ -22,10 +22,10 @@ export default class GetKeywordInfoUseCase {
                 const definition = contents[0];
                 const example = contents[1];
                 const origin = contents[2];
-                const writeHistoryResult = await history_repository.writeHistory("email", keyword, definition, example, origin, model);
-                return writeHistoryResult;
+                // const writeHistoryResult = await history_repository.writeHistory("email", keyword, definition, example, origin, model);
+                return new DataResponse(Result.Success, "keyword info generated successfully", openaiResult.payload);
             } else {
-                return new DataResponse(Result.Fail, "error generating keyword info", openaiResult.payload);
+                return new DataResponse(Result.Fail, "error generating keyword info", {});
             }
         } else {
             // use gemini service

@@ -22,7 +22,7 @@ export default class AuthRepository {
         docSnap.data()
       );
     } catch (error) {
-      return new DataResponse(Result.Fail, "로그인 실패", {});
+      return new DataResponse(Result.Fail, "로그인 실패", );
     }
   }
 

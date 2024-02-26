@@ -13,24 +13,6 @@ import UserModel from "@/domain/models/user_model";
 import { Result } from "@/types";
 
 export default class UserRepository {
-  login(email: string, password: string): Promise<DataResponse> {
-    const response = new DataResponse(
-      Result.Success,
-      "User logged in successfully",
-      { email }
-    );
-    return Promise.resolve(response);
-  }
-
-  logout(email: string): Promise<DataResponse> {
-    const response = new DataResponse(
-      Result.Success,
-      "User logged in successfully",
-      { email }
-    );
-
-    return Promise.resolve(response);
-  }
 
   async queryUserByEmail(email: string): Promise<DataResponse> {
     const user: {}[] = [];
