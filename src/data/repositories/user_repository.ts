@@ -11,6 +11,7 @@ import DataResponse from "../DataResponse";
 import { db } from "../firebase";
 import UserModel from "@/domain/models/user_model";
 import { Result } from "@/types";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 export default class UserRepository {
 
@@ -40,6 +41,8 @@ export default class UserRepository {
     try {
       const user = new UserModel(new Date(), email, password).toObject();
       const docRef = doc(collection(db, "users"), email);
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(docRef, user);
       return new DataResponse(Result.Success, "User successfully created", {});
     } catch (error) {

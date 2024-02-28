@@ -12,7 +12,7 @@ export default class SignUpUseCase {
   }
 
   async createUser(email: string, password: string): Promise<DataResponse> {
-    if ((await this.checkIfEmailExists(email)).result === Result.Success) {
+    if ((await this.checkIfEmailExists(email)).result === Result.Fail) {
       const response = await this.user_repository.createUser(email, password);
       return response;
     } else {
