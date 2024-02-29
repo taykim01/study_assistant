@@ -1,9 +1,16 @@
 import DataResponse from "@/data/DataResponse";
 import HistoryRepository from "@/data/repositories/history_repository";
+import { Result } from "@/types";
+import { getAuth } from "firebase/auth";
 
 export default class ReadHistoryUseCase {
-    async readHistory(email: string): Promise<DataResponse> {
+    async readHistory(): Promise<DataResponse> {
         const history_repository = new HistoryRepository();
-        return history_repository.readHistory(email);
+        const user = getAuth().currentUser;
+        if (user?.email) {
+            return history_repository.readHistory(user.email);
+        } else {
+            return new DataResponse(Result.Fail, "user is not logged in", {});
+        }
     }
 }

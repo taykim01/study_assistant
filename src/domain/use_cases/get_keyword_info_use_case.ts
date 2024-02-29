@@ -3,6 +3,7 @@ import HistoryRepository from "@/data/repositories/history_repository";
 import GeminiServices from "@/data/services/gemini_services";
 import OpenAIServices from "@/data/services/openai_services";
 import { AIModel, Result } from "@/types";
+import { getAuth } from "firebase/auth";
 
 export default class GetKeywordInfoUseCase {
     // take keyword
@@ -13,16 +14,19 @@ export default class GetKeywordInfoUseCase {
         const open_AI_services = new OpenAIServices();
         const gemini_services = new GeminiServices();
         const history_repository = new HistoryRepository();
-        if (model === AIModel.OpenAI) {
+        if (model === "openai") {
             // use openai service
             const openaiResult = await open_AI_services.generateKeywordInfo(keyword);
             // add to db
             if (openaiResult.result === Result.Success) {
+                const user = getAuth().currentUser
                 const contents = openaiResult.payload;
-                const definition = contents[0];
-                const example = contents[1];
-                const origin = contents[2];
-                // const writeHistoryResult = await history_repository.writeHistory("email", keyword, definition, example, origin, model);
+                const definition = contents;
+                if (user?.email) {
+                    await history_repository.writeHistory(user.email, keyword, definition, model);
+                } else {
+                    return new DataResponse(Result.Fail, "user is not logged in", {});
+                }
                 return new DataResponse(Result.Success, "keyword info generated successfully", openaiResult.payload);
             } else {
                 return new DataResponse(Result.Fail, "error generating keyword info", {});

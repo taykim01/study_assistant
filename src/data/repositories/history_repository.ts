@@ -34,8 +34,8 @@ export default class HistoryRepository {
     email: string,
     keyword: string,
     definition: string,
-    example: string,
-    origin: string,
+    // example: string,
+    // origin: string,
     model: AIModel
   ): Promise<DataResponse> {
     try {
@@ -43,8 +43,8 @@ export default class HistoryRepository {
         new Date(),
         keyword,
         definition,
-        example,
-        origin,
+        // example,
+        // origin,
         model
       ).toObject();
 
