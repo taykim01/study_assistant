@@ -42,13 +42,11 @@ export default function Login() {
                 type="text"
                 placeholder="Email"
                 onChange={(e: string) => handleInput(e, "email")}
-                defaultValue={process.env.NEXT_PUBLIC_EMAIL}
               />
               <Input
                 type="password"
                 placeholder="Password"
                 onChange={(e: string) => handleInput(e, "pw")}
-                defaultValue={process.env.NEXT_PUBLIC_PASSWORD}
               />
             </div>
             <div className="vf gap12">
