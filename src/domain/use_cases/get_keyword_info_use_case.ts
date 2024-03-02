@@ -23,7 +23,7 @@ export default class GetKeywordInfoUseCase {
                 const contents = openaiResult.payload;
                 const definition = contents;
                 if (user?.email) {
-                    await history_repository.writeHistory(user.email, keyword, definition, model);
+                    await history_repository.writeHistory(user.email, keyword, definition, model, false);
                 } else {
                     return new DataResponse(Result.Fail, "user is not logged in", {});
                 }

@@ -1,12 +1,12 @@
 import {
   query,
   collection,
-  where,
   getDocs,
   doc,
   setDoc,
   updateDoc,
   deleteDoc,
+  orderBy,
 } from "firebase/firestore";
 import DataResponse from "../DataResponse";
 import { db } from "../firebase";
@@ -17,7 +17,9 @@ export default class HistoryRepository {
   async readHistory(email: string): Promise<DataResponse> {
     const history: {}[] = [];
     try {
-      const querySnapshot = await getDocs(collection(db, "users", email, "history"));
+      const colRef = collection(db, "users", email, "history");
+      const queryResult = query(colRef, orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(queryResult);
       querySnapshot.forEach((doc) => {
         history.push({
           ...doc.data(),
@@ -36,7 +38,8 @@ export default class HistoryRepository {
     definition: string,
     // example: string,
     // origin: string,
-    model: AIModel
+    model: AIModel,
+    starBool: boolean
   ): Promise<DataResponse> {
     try {
       const newHistory = new KeywordModel(
@@ -45,7 +48,8 @@ export default class HistoryRepository {
         definition,
         // example,
         // origin,
-        model
+        model,
+        starBool
       ).toObject();
 
       const docRef = doc(collection(db, "users", email, "history"));

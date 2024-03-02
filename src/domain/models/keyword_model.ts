@@ -8,6 +8,7 @@ export default class KeywordModel {
   // image_url: string;
   // origin: string;
   model: AIModel;
+  starBool: boolean;
 
   constructor(
     createdAt: Date,
@@ -16,7 +17,8 @@ export default class KeywordModel {
     // example: string,
     // image_url: string,
     // origin: string,
-    model: AIModel
+    model: AIModel,
+    starBool: boolean,
   ) {
     this.createdAt = createdAt;
     this.term = term;
@@ -25,6 +27,7 @@ export default class KeywordModel {
     // this.image_url = image_url;
     // this.origin = origin;
     this.model = model;
+    this.starBool = starBool;
   }
 
   toObject() {
@@ -36,6 +39,7 @@ export default class KeywordModel {
       // image_url: this.image_url,
       // origin: this.origin,
       model: this.model,
+      starBool: this.starBool,
     };
   }
 }
