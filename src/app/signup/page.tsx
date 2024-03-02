@@ -1,6 +1,7 @@
 "use client";
 
 import SignUpUseCase from "@/domain/use_cases/sign_up_use_case";
+import Header from "@/presentation/components/header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -24,17 +25,20 @@ export default function SignUp() {
   }
 
   return (
-    <main className="vf">
-      <h1>Sign Up</h1>
-      <div className="hf">
-        <input type="text" placeholder="Email" onChange={(e) => handleInput(e, "email")} />
-        <input type="password" placeholder="Password" onChange={(e) => handleInput(e, "pw")} />
-        <button onClick={handleSignUp}>Sign Up</button>
-      </div>
-      <div className="hf">
-        <h2>Already a member?</h2>
-        <button onClick={() => router.push('/login')}>Login</button>
-      </div>
-    </main>
+    <div className="header_container">
+      <Header />
+      <main className="vf">
+        <h1>Sign Up</h1>
+        <div className="hf">
+          <input type="text" placeholder="Email" onChange={(e) => handleInput(e, "email")} />
+          <input type="password" placeholder="Password" onChange={(e) => handleInput(e, "pw")} />
+          <button onClick={handleSignUp}>Sign Up</button>
+        </div>
+        <div className="hf">
+          <h2>Already a member?</h2>
+          <button onClick={() => router.push('/login')}>Login</button>
+        </div>
+      </main>
+    </div>
   );
 }

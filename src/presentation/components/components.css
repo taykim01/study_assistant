@@ -3,15 +3,36 @@
   padding: 1rem;
   border-radius: 1rem;
   background: #e8e8e8;
-  box-shadow: 20px 20px 60px #c5c5c5, -20px -20px 60px #ffffff;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 20px 20px 60px #c5c5c5, -20px -20px 60px #ffffff; */
   transition: 0.3s;
+  z-index: -1;
 }
 
 .component_input:focus {
   outline-color: #e8e8e8;
   background: #e8e8e8;
-  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff; */
   transition: 0.3s;
+}
+
+.component_textarea {
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.05), -20px -20px 60px #ffffff;
+  border: 1px solid #e8e8e8;
+  transition: 0.3s;
+  box-sizing: border-box;
+  outline: none;
+  resize: none;
+  min-height: 200px;
+  height: fit-content;
+  z-index: -1;
+  font-family: Pretendard;
+  font-size: 14px;
 }
 
 

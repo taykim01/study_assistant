@@ -1,10 +1,5 @@
-import dynamic from 'next/dynamic'
 import type { Metadata } from "next";
 import "../presentation/assets/styles/Global.css";
-
-const DynamicHeader = dynamic(() => import('@/presentation/components/header'), {
-  ssr: false
-})
 
 export const metadata: Metadata = {
   title: "Study Assistant",
@@ -18,7 +13,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <DynamicHeader />
       <body style={{ marginTop: "10vh" }}>{children}</body>
     </html>
   );

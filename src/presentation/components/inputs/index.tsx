@@ -7,15 +7,29 @@ export default function Input(props: any) {
         props.onChange(value);
     }
 
-    return (
-        <input
-            type="text"
-            name="text"
-            className="component_input"
-            placeholder={props.placeholder}
-            disabled={props.disabled || false}
-            onChange={handleChange}
-            defaultValue={props.defaultValue || ""}
-        />
-    )
+    switch (props.type) {
+        case "textarea":
+            return (
+                <textarea
+                    name="text"
+                    className="component_textarea"
+                    disabled={props.disabled || false}
+                    onChange={handleChange}
+                    defaultValue={props.defaultValue || ""}
+                />
+            )
+
+        default:
+            return (
+                <input
+                    type="text"
+                    name="text"
+                    className="component_input"
+                    placeholder={props.placeholder}
+                    disabled={props.disabled || false}
+                    onChange={handleChange}
+                    defaultValue={props.defaultValue || ""}
+                />
+            )
+    }
 }

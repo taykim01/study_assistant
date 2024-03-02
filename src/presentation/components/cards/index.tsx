@@ -8,7 +8,7 @@ export default function Cards(props: any) {
             <div className="vf gap12 w100">
                 <div className="hf gap28 ca w100 sbj">
                     <div className="vf gap8">
-                        <div className="h5">{props.title}</div>
+                        <div className="h5">{props.title.toUpperCase()}</div>
                         <div className="p4">{props.date}</div>
                     </div>
                     <Toggle

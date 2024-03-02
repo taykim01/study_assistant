@@ -8,6 +8,8 @@ import ReadHistoryUseCase from "@/domain/use_cases/read_history_use_case"
 import SaveToImportantUseCase from "@/domain/use_cases/save_to_important_use_case"
 import Button from "@/presentation/components/button"
 import Cards from "@/presentation/components/cards"
+import Header from "@/presentation/components/header"
+import Input from "@/presentation/components/inputs"
 import Search from "@/presentation/components/search"
 import formatDate from "@/presentation/utils/formatDate"
 import { useEffect, useState } from "react"
@@ -41,6 +43,7 @@ export default function Home() {
     const handleDelete = async (id: string) => {
         const delete_from_db_use_case = new DeleteFromDBUseCase()
         await delete_from_db_use_case.deleteHistory(id)
+        getKeywords()
     }
 
     const handleStar = async (id: string, starBool: boolean) => {
@@ -49,36 +52,45 @@ export default function Home() {
     }
 
     return (
-        <main>
-            <div className="home_grid">
-                <div className="vf">
-                    <div className="hf gap24 ca">
-                        <Search onChange={handleInput} />
-                        <Button onClick={handleSearch} text="Search" />
-                    </div>
-                    <div className="vf">
-                        <div>This is your answer: {word}</div>
-                    </div>
-                </div>
-                <div className="vf">
-                    {
-                        history.length > 0
-                            ? history.map((item: any) => (
-                                <Cards
-                                    key={item.id}
-                                    date={formatDate(item.createdAt)}
-                                    title={item.term}
-                                    subtitle={item.definition}
-                                    delete={() => handleDelete(item.id)}
-                                    edit={null}
-                                    star={(e: boolean) => handleStar(item.id, e)}
+        <div className="header_container">
+            <Header />
+            <main>
+                <div className="home_grid">
+                    <div className="vf gap60">
+                        <div className="hf gap24 ca">
+                            <Search onChange={handleInput} />
+                            <Button onClick={handleSearch} text="Search" />
+                        </div>
+                        <div className="vf gap20">
+                            <div className="h3">Term: {word ? search.toUpperCase() : ""}</div>
+                            <div className="vf gap8">
+                                <div className="h4">Definition</div>
+                                <Input
+                                    type="textarea"
+                                    defaultValue={word}
                                 />
-                            ))
-                            : null
-                    }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="home_card-scroll">
+                        {
+                            history.length > 0
+                                ? history.map((item: any) => (
+                                    <Cards
+                                        key={item.id}
+                                        date={formatDate(item.createdAt)}
+                                        title={item.term}
+                                        subtitle={item.definition}
+                                        delete={() => handleDelete(item.id)}
+                                        edit={null}
+                                        star={(e: boolean) => handleStar(item.id, e)}
+                                    />
+                                ))
+                                : null
+                        }
+                    </div>
                 </div>
-            </div>
-
-        </main>
+            </main>
+        </div>
     )
 }

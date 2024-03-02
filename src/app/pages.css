@@ -1,5 +1,12 @@
 .home_grid {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 4rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+}
+
+.home_card-scroll {
+  display: flex;
+  flex-direction: column;
+  height: 74vh;
+  overflow-y: scroll;
 }
