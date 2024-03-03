@@ -3,6 +3,7 @@ import Button from "../button";
 import Toggle from "../toggle";
 import Input from "../inputs";
 import { useState } from "react";
+import highlightKeyword from "@/presentation/utils/highlightKeyword";
 
 export default function Cards(props: any) {
     const [edit, setEdit] = useState(props.subtitle)
@@ -12,6 +13,8 @@ export default function Cards(props: any) {
         props.edit(props.id, edit)
         setEditStatus(false)
     }
+
+    const content = highlightKeyword(props.subtitle, props.title)
 
     return (
         <div className="component_cards">
@@ -34,7 +37,7 @@ export default function Cards(props: any) {
                             onChange={(e: string) => setEdit(e)}
                             onBlur={() => handleEdit()}
                         />
-                        : <div className="p3">{props.subtitle}</div>
+                        : <div className="p3">{content}</div>
                 }
             </div>
             <div className="hf ca gap8">
