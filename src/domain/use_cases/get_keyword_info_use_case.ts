@@ -14,6 +14,7 @@ export default class GetKeywordInfoUseCase {
         const open_AI_services = new OpenAIServices();
         const gemini_services = new GeminiServices();
         const history_repository = new HistoryRepository();
+        let result;
         if (model === "openai") {
             // use openai service
             const openaiResult = await open_AI_services.generateKeywordInfo(keyword);
@@ -23,11 +24,11 @@ export default class GetKeywordInfoUseCase {
                 const contents = openaiResult.payload;
                 const definition = contents;
                 if (user?.email) {
-                    await history_repository.writeHistory(user.email, keyword, definition, model, false);
+                    result = await history_repository.writeHistory(user.email, keyword, definition, model, false);
                 } else {
                     return new DataResponse(Result.Fail, "user is not logged in", {});
                 }
-                return new DataResponse(Result.Success, "keyword info generated successfully", openaiResult.payload);
+                return new DataResponse(Result.Success, "keyword info generated successfully", [openaiResult.payload, result.payload]);
             } else {
                 return new DataResponse(Result.Fail, "error generating keyword info", {});
             }

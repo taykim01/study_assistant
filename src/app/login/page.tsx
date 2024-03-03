@@ -4,7 +4,6 @@ import LogInUseCase from "@/domain/use_cases/log_in_use_case";
 import Button from "@/presentation/components/button";
 import Header from "@/presentation/components/header";
 import Input from "@/presentation/components/inputs";
-import Loading from "@/presentation/components/loading";
 import { Result } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

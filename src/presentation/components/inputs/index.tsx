@@ -16,6 +16,7 @@ export default function Input(props: any) {
                     disabled={props.disabled || false}
                     onChange={handleChange}
                     defaultValue={props.defaultValue || ""}
+                    onBlur={props.onBlur || null}
                 />
             )
 

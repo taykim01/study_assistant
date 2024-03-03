@@ -4,17 +4,14 @@
   border-radius: 1rem;
   background: #e8e8e8;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  /* box-shadow: 20px 20px 60px #c5c5c5, -20px -20px 60px #ffffff; */
-  transition: 0.3s;
-  z-index: -1;
+  transition: all 0.5s;
+  outline: none;
 }
 
 .component_input:focus {
-  outline-color: #e8e8e8;
   background: #e8e8e8;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  /* box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff; */
-  transition: 0.3s;
+  box-shadow: 0px 0px 200px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s;
 }
 
 .component_textarea {
@@ -30,7 +27,6 @@
   resize: none;
   min-height: 200px;
   height: fit-content;
-  z-index: -1;
   font-family: Pretendard;
   font-size: 14px;
 }

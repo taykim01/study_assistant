@@ -54,7 +54,7 @@ export default class HistoryRepository {
 
       const docRef = doc(collection(db, "users", email, "history"));
       await setDoc(docRef, newHistory);
-      return new DataResponse(Result.Success, "history write success", {});
+      return new DataResponse(Result.Success, "history write success", docRef.id);
     } catch (error) {
       return new DataResponse(Result.Fail, "history write failed", error);
     }

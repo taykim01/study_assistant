@@ -3,7 +3,7 @@
 import "@/app/pages.css"
 import DeleteFromDBUseCase from "@/domain/use_cases/delete_from_db_use_case"
 import GetKeywordInfoUseCase from "@/domain/use_cases/get_keyword_info_use_case"
-import LogOutUseCase from "@/domain/use_cases/log_out_use_case"
+import ModifyKeywordUseCase from "@/domain/use_cases/modify_keyword_use_case"
 import ReadHistoryUseCase from "@/domain/use_cases/read_history_use_case"
 import SaveToImportantUseCase from "@/domain/use_cases/save_to_important_use_case"
 import Button from "@/presentation/components/button"
@@ -18,11 +18,13 @@ export default function Home() {
     const [search, setSearch] = useState("")
     const [word, setWord] = useState("")
     const [history, setHistory] = useState([])
+    const [id, setId] = useState("")
 
     const handleSearch = async () => {
         const getKeyword = new GetKeywordInfoUseCase()
-        const keyword = (await getKeyword.getKeywordInfo(search, "openai")).payload
-        setWord(keyword)
+        const keyword = await getKeyword.getKeywordInfo(search, "openai")
+        setWord(keyword.payload[0])
+        setId(keyword.payload[1])
         getKeywords()
     }
 
@@ -51,6 +53,12 @@ export default function Home() {
         await save_to_important_use_case.saveToImportant(id, starBool)
     }
 
+    const handleModification = async () => {
+        const modify_keyword_use_case = new ModifyKeywordUseCase()
+        await modify_keyword_use_case.modifyHistory(id, { definition: word })
+        getKeywords()
+    }
+
     return (
         <div className="header_container">
             <Header />
@@ -64,10 +72,12 @@ export default function Home() {
                         <div className="vf gap20">
                             <div className="h3">Term: {word ? search.toUpperCase() : ""}</div>
                             <div className="vf gap8">
-                                <div className="h4">Definition</div>
+                                <div className="h4" style={{ zIndex: 1 }}>Definition</div>
                                 <Input
                                     type="textarea"
                                     defaultValue={word}
+                                    onChange={(e: string) => setWord(e)}
+                                    onBlur={() => handleModification()}
                                 />
                             </div>
                         </div>
