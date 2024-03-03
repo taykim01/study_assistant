@@ -53,9 +53,9 @@ export default function Home() {
         await save_to_important_use_case.saveToImportant(id, starBool)
     }
 
-    const handleModification = async () => {
+    const handleModification = async (termId?: string, modification?: string) => {
         const modify_keyword_use_case = new ModifyKeywordUseCase()
-        await modify_keyword_use_case.modifyHistory(id, { definition: word })
+        await modify_keyword_use_case.modifyHistory(termId || id, { definition: modification || word })
         getKeywords()
     }
 
@@ -88,11 +88,12 @@ export default function Home() {
                                 ? history.map((item: any) => (
                                     <Cards
                                         key={item.id}
+                                        id={item.id}
                                         date={formatDate(item.createdAt)}
                                         title={item.term}
                                         subtitle={item.definition}
                                         delete={() => handleDelete(item.id)}
-                                        edit={null}
+                                        edit={handleModification}
                                         star={(e: boolean) => handleStar(item.id, e)}
                                     />
                                 ))

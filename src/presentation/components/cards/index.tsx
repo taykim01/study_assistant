@@ -1,8 +1,18 @@
 import "@/presentation/components/components.css";
 import Button from "../button";
 import Toggle from "../toggle";
+import Input from "../inputs";
+import { useState } from "react";
 
 export default function Cards(props: any) {
+    const [edit, setEdit] = useState(props.subtitle)
+    const [editStatus, setEditStatus] = useState(false)
+
+    const handleEdit = () => {
+        props.edit(props.id, edit)
+        setEditStatus(false)
+    }
+
     return (
         <div className="component_cards">
             <div className="vf gap12 w100">
@@ -16,10 +26,19 @@ export default function Cards(props: any) {
                         takeChecked={(e: boolean) => props.star(e)}
                     />
                 </div>
-                <div className="p3">{props.subtitle}</div>
+                {
+                    editStatus
+                        ? <Input
+                            type="textarea"
+                            defaultValue={props.subtitle}
+                            onChange={(e: string) => setEdit(e)}
+                            onBlur={() => handleEdit()}
+                        />
+                        : <div className="p3">{props.subtitle}</div>
+                }
             </div>
             <div className="hf ca gap8">
-                <Button type="edit" size={40} onClick={props.edit} />
+                <Button type="edit" size={40} onClick={() => setEditStatus(true)} />
                 <Button type="delete" size={40} onClick={props.delete} />
             </div>
         </div>
