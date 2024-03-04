@@ -3,7 +3,7 @@ import Button from "../button";
 import Toggle from "../toggle";
 import Input from "../inputs";
 import { useState } from "react";
-import highlightKeyword from "@/presentation/utils/highlightKeyword";
+import useHighlightKeyword from "@/presentation/utils/useHighlightKeyword";
 
 export default function Cards(props: any) {
     const [edit, setEdit] = useState(props.subtitle)
@@ -14,7 +14,7 @@ export default function Cards(props: any) {
         setEditStatus(false)
     }
 
-    const content = highlightKeyword(props.subtitle, props.title)
+    const content = useHighlightKeyword(props.subtitle, props.title)
 
     return (
         <div className="component_cards">
