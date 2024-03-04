@@ -10,6 +10,7 @@ import { useState } from "react";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState({ email: "", pw: "" });
+  const [signUpStatus, setSignUpStatus] = useState(false)
   const router = useRouter()
 
   const handleInput = (input: any, emailpw: string) => {
@@ -50,9 +51,12 @@ export default function Login() {
             </div>
             <div className="vf gap12">
               <Button onClick={handleLogin} text="Log In" />
-              <Button onClick={() => router.push('/signup')} text="No account? Sign Up" />
+              <Button onClick={() => setSignUpStatus(true)} text="No account? Sign Up" />
             </div>
           </div>
+          {
+            signUpStatus && <div>Sign Up Successful</div>
+          }
         </div>
       </main>
     </div>

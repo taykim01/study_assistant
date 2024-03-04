@@ -23,7 +23,7 @@ export default function Input(props: any) {
         default:
             return (
                 <input
-                    type="text"
+                    type={props.type}
                     name="text"
                     className="component_input"
                     placeholder={props.placeholder}
