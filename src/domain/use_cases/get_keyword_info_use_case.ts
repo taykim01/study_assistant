@@ -26,7 +26,8 @@ export default class GetKeywordInfoUseCase {
                         if (user) {
                             try {
                                 const result = await history_repository.writeHistory(user.email!, keyword, definition, model, false);
-                                resolve(result);
+                                const finalResult = new DataResponse(Result.Success, "successfully wrote new history", [openaiResult.payload, result.payload]);
+                                resolve(finalResult);
                             } catch (error) {
                                 resolve(new DataResponse(Result.Fail, "failed to write new history", error));
                             }
