@@ -1,11 +1,10 @@
 "use client";
 
 import { getAuth } from "firebase/auth";
-import Login from "./login/page";
+import Login from "./login/login";
 import { initializeApp } from "firebase/app";
-import Home from "./home/page";
+import Home from "./home/home";
 import ReduxProvider from "@/app/redux_provider";
-import { useEffect } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,18 +19,12 @@ initializeApp(firebaseConfig);
 
 export default function MyApp() {
   const auth = getAuth().currentUser
-
-  useEffect(() => {
-    console.log(auth)
-  }, [auth])
-  console.log(auth)
+  
   return (
     <ReduxProvider>
-      <Login />
+      {
+        auth ? <ReduxProvider><Home /></ReduxProvider> : <ReduxProvider><Login /></ReduxProvider>
+      }
     </ReduxProvider>
   )
 }
-
-// {
-//   auth ? <ReduxProvider><Home /></ReduxProvider> : <ReduxProvider><Login /></ReduxProvider>
-// }
